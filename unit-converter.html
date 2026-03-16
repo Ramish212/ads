@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit Converter – Free Online Tool</title>
+<meta name="description" content="Free online unit converter. Convert length, weight, temperature, currency, and speed instantly. No signup required." />
+
+<!-- ✅ REPLACE THIS WITH YOUR GOOGLE ADSENSE CODE -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: #e0ddd5;
+    --border2: #ccc9bf;
+    --text: #1a1916;
+    --text2: #6b6860;
+    --text3: #9e9b93;
+    --accent: #1a1916;
+    --accent-fg: #ffffff;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .logo {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+
+  .logo span {
+    color: var(--text2);
+    font-weight: 400;
+  }
+
+  nav a {
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    margin-left: 1.5rem;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  /* === AD SLOTS === */
+  .ad-slot {
+    background: var(--surface);
+    border: 1.5px dashed var(--border2);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text3);
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .ad-slot .ad-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text3);
+  }
+
+  .ad-top {
+    width: 100%;
+    height: 90px;
+    margin: 1.25rem auto;
+    max-width: 728px;
+  }
+
+  .ad-bottom {
+    width: 100%;
+    height: 90px;
+    margin: 1.5rem auto 0;
+    max-width: 728px;
+  }
+
+  .ad-side {
+    height: 250px;
+    width: 100%;
+  }
+
+  /* === LAYOUT === */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .page-sub {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  @media (max-width: 620px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .ad-side { display: none; }
+  }
+
+  /* === TOOL CARD === */
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  /* === TABS === */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .tab {
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text2);
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+
+  .tab:hover { border-color: var(--border2); color: var(--text); }
+
+  .tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+    border-color: var(--accent);
+  }
+
+  /* === CONVERTER === */
+  .converter {
+    display: grid;
+    grid-template-columns: 1fr 44px 1fr;
+    gap: 10px;
+    align-items: end;
+  }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text2);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .field input,
+  .field select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 16px;
+    font-family: 'DM Mono', monospace;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .field input:focus,
+  .field select:focus {
+    border-color: var(--border2);
+    background: var(--surface);
+  }
+
+  .field select {
+    margin-top: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  .swap-btn {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    margin-bottom: 0;
+  }
+
+  .swap-btn:hover {
+    background: var(--surface);
+    border-color: var(--border2);
+    color: var(--text);
+  }
+
+  /* === RESULT === */
+  .result-box {
+    margin-top: 1.25rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .result-num {
+    font-size: 26px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: -0.5px;
+  }
+
+  .result-formula {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 2px;
+  }
+
+  .copy-btn {
+    padding: 7px 16px;
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text2);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .copy-btn:hover { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+
+  /* === SIDEBAR === */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .history-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+
+  .history-card h3 {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text2);
+    margin-bottom: 10px;
+  }
+
+  .hist-item {
+    font-size: 12px;
+    color: var(--text2);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .hist-item:last-child { border-bottom: none; }
+
+  /* === INFO === */
+  .info-section {
+    margin-top: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .info-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .info-item h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .info-item p {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text3);
+    padding: 2rem 1.25rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Convert<span>.tools</span></div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<div class="page">
+
+  <!-- TOP AD SLOT -->
+  <div class="ad-slot ad-top">
+    <!-- ✅ REPLACE WITH ADSENSE: <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="XXXX" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    <div class="ad-tag">Advertisement</div>
+    <div>728 × 90 — Paste your Google AdSense code here</div>
+  </div>
+
+  <h1 class="page-title">Unit Converter</h1>
+  <p class="page-sub">Fast, free conversions — length, weight, temperature, currency & more. No signup needed.</p>
+
+  <div class="main-grid">
+    <div>
+      <div class="tool-card">
+        <div class="tabs">
+          <button class="tab active" onclick="setCategory('length', this)">Length</button>
+          <button class="tab" onclick="setCategory('weight', this)">Weight</button>
+          <button class="tab" onclick="setCategory('temp', this)">Temperature</button>
+          <button class="tab" onclick="setCategory('currency', this)">Currency</button>
+          <button class="tab" onclick="setCategory('speed', this)">Speed</button>
+          <button class="tab" onclick="setCategory('area', this)">Area</button>
+          <button class="tab" onclick="setCategory('data', this)">Data</button>
+        </div>
+
+        <div class="converter">
+          <div class="field">
+            <label>From</label>
+            <input type="number" id="from-val" value="1" oninput="convert()" />
+            <select id="from-unit" onchange="convert()"></select>
+          </div>
+          <button class="swap-btn" onclick="swap()" title="Swap units">⇄</button>
+          <div class="field">
+            <label>To</label>
+            <input type="number" id="to-val" readonly style="cursor:default;opacity:0.8;" />
+            <select id="to-unit" onchange="convert()"></select>
+          </div>
+        </div>
+
+        <div class="result-box">
+          <div>
+            <div class="result-num" id="result-big">—</div>
+            <div class="result-formula" id="result-formula">Enter a value above to convert</div>
+          </div>
+          <button class="copy-btn" onclick="copyResult()">Copy result</button>
+        </div>
+      </div>
+
+      <!-- BOTTOM AD SLOT -->
+      <div class="ad-slot ad-bottom">
+        <!-- ✅ REPLACE WITH ADSENSE -->
+        <div class="ad-tag">Advertisement</div>
+        <div>728 × 90 — Paste your Google AdSense code here</div>
+      </div>
+
+      <div class="info-section">
+        <h2>About this converter</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <h4>Length</h4>
+            <p>Convert between meters, kilometers, miles, feet, inches, centimeters, and yards.</p>
+          </div>
+          <div class="info-item">
+            <h4>Weight</h4>
+            <p>Switch between kilograms, grams, pounds, ounces, and metric tons instantly.</p>
+          </div>
+          <div class="info-item">
+            <h4>Temperature</h4>
+            <p>Convert Celsius, Fahrenheit, and Kelvin with accurate formulas.</p>
+          </div>
+          <div class="info-item">
+            <h4>Currency</h4>
+            <p>Approximate rates for USD, PKR, EUR, GBP, SAR, AED and more.</p>
+          </div>
+          <div class="info-item">
+            <h4>Speed</h4>
+            <p>km/h, mph, m/s, and knots for travel and science use cases.</p>
+          </div>
+          <div class="info-item">
+            <h4>Data</h4>
+            <p>Bytes, KB, MB, GB, TB — perfect for checking file sizes and storage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <!-- SIDE AD SLOT -->
+      <div class="ad-slot ad-side">
+        <!-- ✅ REPLACE WITH ADSENSE: 300x250 -->
+        <div class="ad-tag">Advertisement</div>
+        <div style="text-align:center;">300 × 250<br>Paste AdSense<br>code here</div>
+      </div>
+
+      <div class="history-card">
+        <h3>Recent</h3>
+        <div id="history-list"><div style="font-size:12px;color:var(--text3);">No conversions yet</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Convert.tools — Free unit converter. No ads tracked, no data stored.
+</footer>
+
+<script>
+const cats = {
+  length: {
+    units: ['Meter (m)','Kilometer (km)','Mile (mi)','Foot (ft)','Inch (in)','Centimeter (cm)','Yard (yd)','Millimeter (mm)','Nautical Mile'],
+    base: [1, 1000, 1609.344, 0.3048, 0.0254, 0.01, 0.9144, 0.001, 1852]
+  },
+  weight: {
+    units: ['Kilogram (kg)','Gram (g)','Pound (lb)','Ounce (oz)','Metric Ton','Milligram (mg)','Stone'],
+    base: [1, 0.001, 0.453592, 0.0283495, 1000, 0.000001, 6.35029]
+  },
+  temp: { units: ['Celsius (°C)','Fahrenheit (°F)','Kelvin (K)'], base: null },
+  currency: {
+    units: ['USD ($)','PKR (₨)','EUR (€)','GBP (£)','SAR (ر.س)','AED (د.إ)','CAD ($)','AUD ($)'],
+    base: [1, 278, 1.08, 1.27, 0.267, 0.272, 0.74, 0.65]
+  },
+  speed: {
+    units: ['km/h','mph','m/s','Knot','ft/s'],
+    base: [1, 1.60934, 3.6, 1.852, 1.09728]
+  },
+  area: {
+    units: ['Square Meter','Square Kilometer','Square Mile','Square Foot','Square Inch','Acre','Hectare'],
+    base: [1, 1e6, 2589988.1, 0.092903, 0.00064516, 4046.86, 10000]
+  },
+  data: {
+    units: ['Byte (B)','Kilobyte (KB)','Megabyte (MB)','Gigabyte (GB)','Terabyte (TB)','Petabyte (PB)'],
+    base: [1, 1024, 1048576, 1073741824, 1099511627776, 1.126e15]
+  }
+};
+
+let current = 'length';
+let history = [];
+
+function setCategory(cat, el) {
+  current = cat;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  buildSelects();
+  convert();
+}
+
+function buildSelects() {
+  const fu = document.getElementById('from-unit');
+  const tu = document.getElementById('to-unit');
+  const units = cats[current].units;
+  fu.innerHTML = units.map((u,i) => `<option value="${i}">${u}</option>`).join('');
+  tu.innerHTML = units.map((u,i) => `<option value="${i}">${u}</option>`).join('');
+  tu.selectedIndex = Math.min(1, units.length - 1);
+}
+
+function tempConvert(val, from, to) {
+  let celsius;
+  if (from === 0) celsius = val;
+  else if (from === 1) celsius = (val - 32) * 5 / 9;
+  else celsius = val - 273.15;
+  if (to === 0) return celsius;
+  if (to === 1) return celsius * 9 / 5 + 32;
+  return celsius + 273.15;
+}
+
+function convert() {
+  const fv = parseFloat(document.getElementById('from-val').value);
+  const fi = parseInt(document.getElementById('from-unit').value);
+  const ti = parseInt(document.getElementById('to-unit').value);
+  const units = cats[current].units;
+
+  if (isNaN(fv)) {
+    document.getElementById('to-val').value = '';
+    document.getElementById('result-big').textContent = '—';
+    document.getElementById('result-formula').textContent = 'Enter a value above to convert';
+    return;
+  }
+
+  let result;
+  if (current === 'temp') {
+    result = tempConvert(fv, fi, ti);
+  } else {
+    result = fv * cats[current].base[fi] / cats[current].base[ti];
+  }
+
+  const rounded = parseFloat(result.toPrecision(8));
+  const display = rounded.toLocaleString('en-US', { maximumFractionDigits: 6 });
+  document.getElementById('to-val').value = rounded;
+  document.getElementById('result-big').textContent = display;
+
+  const fromName = units[fi].split(' ')[0];
+  const toName = units[ti].split(' ')[0];
+  const formula = `${fv.toLocaleString()} ${fromName} = ${display} ${toName}`;
+  document.getElementById('result-formula').textContent = formula;
+
+  history.unshift(formula);
+  if (history.length > 6) history.pop();
+  document.getElementById('history-list').innerHTML =
+    history.map(h => `<div class="hist-item">${h}</div>`).join('');
+}
+
+function swap() {
+  const fu = document.getElementById('from-unit');
+  const tu = document.getElementById('to-unit');
+  const fv = document.getElementById('from-val').value;
+  const tv = document.getElementById('to-val').value;
+  const tmp = fu.value;
+  fu.value = tu.value;
+  tu.value = tmp;
+  if (tv) document.getElementById('from-val').value = tv;
+  convert();
+}
+
+function copyResult() {
+  const text = document.getElementById('result-formula').textContent;
+  if (text && text !== 'Enter a value above to convert') {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = orig, 1500);
+    }).catch(() => {});
+  }
+}
+
+buildSelects();
+convert();
+</script>
+</body>
+</html>
